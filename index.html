@@ -3,114 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hug Bank</title>
+    <title>Gerenciador de Contas Bancárias</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="c:\Users\hugov\Downloads\account_balance_FILL0_wght400_GRAD0_opsz24.svg" type="image/x-icon">
 </head>
 <body>
     <div class="conteudo">
-    <header>
-        <nav>
-            <h1>HugBank</h1>
-            <ul>
-                <li><a href="#">Página inicial</a></li>
-                <li><a href="#">Sobre</a></li>
-                <li><a href="#">Serviços</a></li>
-                <li><a href="#">Contatos</a></li>
-            </ul>
-        </nav>
-    </header>
+        <header>
+            <nav>
+                <h1>Gerenciador de Contas Bancárias</h1>
+                <ul>
+                    <li><a href="#">Página inicial</a></li>
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="#">Serviços</a></li>
+                    <li><a href="#">Contatos</a></li>
+                </ul>
+            </nav>
+        </header>
 
-    <section class="container">
-        <div class="row">
-            <div class="col">
-              <form class="form" action="" method="get">
-                    <!--Campos para inserir uma nova conta-->
-                    <p>Agência <input type="text" class="agencia"></p>
-                    <p>Número <input type="text"  class="numero"></p>
-                    <p>Tipo de Conta
-                      <select class="tipo">
-                        <option>Selecione o Tipo</option>
-                        <option>Conta Bancária</option>
-                        <option>Conta Corrente</option>
-                        <option>Conta Poupança</option>
-                        <option>Conta Universitária</option>
-                      </select></p>
-                    <p>Saldo <input type="text"  class="saldo"></p>
-                    <button type="submit">Adicionar Conta</button>
+        <section class="container">
+            <div class="row">
+                <div class="col">
+                    <form class="form" action="" method="get">
+                        <!-- Campos para inserir uma nova conta -->
+                        <p>Agência <input type="text" class="agencia"></p>
+                        <p>Número <input type="text"  class="numero"></p>
+                        <p>Tipo de Conta
+                            <select class="tipo">
+                                <option value="Conta Corrente">Conta Corrente</option>
+                                <option value="Conta Poupança">Conta Poupança</option>
+                                <option value="Conta Universitária">Conta Universitária</option>
+                            </select>
+                        </p>
+                        <p>Saldo <input type="text"  class="saldo"></p>
+                        
+                        <!-- Campo adicional para o limite do cartão de crédito (apenas para Conta Corrente) -->
+                        <p>Limite do Cartão de Crédito <input type="text"  class="cartaoCredito"></p>
+
+                        <button type="submit">Adicionar Conta</button>
                     </form>
                     
-                    <!--Botão para visualizar contas-->
-                    <button id="visualizarContas">visualizar Contas</button>
-                    
-                   
-                    
-            </div>
-            <div class="col">
-                <!-- Conteudo do lado direito (extrato e saldo)-->
-                <h1>Extrato  -  Saldo</h1>
-                <div class="extrato-saldo">
-                    <!--Conteiner para exibir contas-->
-                    <div class="contas"></div>
-                    <div class="resultado"></div>
-                    <!-- Exibir o extrato e o saldo aqui -->
+                    <!-- Botão para visualizar contas -->
+                    <button id="visualizarContas">Visualizar Contas</button>
+                </div>
+                <div class="col">
+                    <!-- Conteúdo do lado direito (extrato e saldo) -->
+                    <h1>Extrato  -  Saldo</h1>
+                    <div class="extrato-saldo">
+                        <!-- Contêiner para exibir contas -->
+                        <div class="contas"></div>
+                        <div class="resultado"></div>
+                        <!-- Exibir o extrato e o saldo aqui -->
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer>
-        <p>&copy; 2023 HugBank - Todos os direitos reservados</p>
-    </footer>
-    
-    <script src="contaBancaria.js"></script>
-                    <script>
-                    const form = document.querySelector('form');
-                    const contasContainer = document.querySelector('.contas');
-                    const visualizarContas = document.getElementById('visualizarContas');
-                    const contas = []; // lista para armazenar contas existentes
-                    
-                    // Função para exibir contas
-                    function exibirContas() {
-                        contasContainer.innerHTML = ''; // limpar o conteúdo anterior
-                        let saldoTotal = 0; // inicializa o saldo total
-
-                        for (const conta of contas) {
-                            saldoTotal += conta.saldo; // Adicionar o saldo da conta ao saldo total
-                            contasContainer.innerHTML += `
-                            <p>Agência: ${conta.agencia} Número: ${conta.numero} Tipo: ${conta.tipo} Saldo: ${conta.saldo}</p>
-                            <button class="botaoDeletar" onclick="deletarConta('${conta.numero}')">Deletar</button></p>
-                            `;
-                        }
-                    }
-                    
-                    // função para adicionar uma nova conta
-                    function adicionarConta(evento) {
-                        evento.preventDefault();
-                        const agencia = form.querySelector('.agencia').value;
-                        const numero = form.querySelector('.numero').value;
-                        const tipo = form.querySelector('.tipo').value;
-                        const saldo = parseFloat(form.querySelector('.saldo').value);
-                    
-                        const novaConta = new contaBancaria(agencia, numero, tipo, saldo);
-                        contas.push(novaConta);
-                        form.reset(); // limpar o formulário
-                    }
-                    
-                    // função para deletar uma conta
-                    function deletarConta(numeroConta) {
-                        const indice = contas.findIndex(conta => conta.numero === numeroConta);
-                        if (indice !== -1) {
-                            contas.splice(indice, 1); // remover a conta da lista
-                            exibirContas(); // Atualizar a exibição
-                        }
-                    }
-                    
-                    form.addEventListener('submit', adicionarConta);
-                    visualizarContas.addEventListener('click', function() {
-                        exibirContas();
-                    });
-                    </script>
-</div>                    
+        <footer>
+            <p>&copy; 2023 Gerenciador de Contas Bancárias - Todos os direitos reservados</p>
+        </footer>
+        
+        <script src="contaBancaria.js"></script>
+    </div>                    
 </body>
 </html>
