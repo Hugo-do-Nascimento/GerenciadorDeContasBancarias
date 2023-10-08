@@ -6,6 +6,7 @@
     <title>Gerenciador de Contas Bancárias</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="c:\Users\hugov\Downloads\account_balance_FILL0_wght400_GRAD0_opsz24.svg" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="conteudo">
@@ -27,7 +28,7 @@
                     <form class="form" action="" method="get">
                         <!-- Campos para inserir uma nova conta -->
                         <p>Agência <input type="text" class="agencia"></p>
-                        <p>Número <input type="text"  class="numero"></p>
+                        <p>Número <input type="text" class="numero"></p>
                         <p>Tipo de Conta
                             <select class="tipo">
                                 <option value="Conta Corrente">Conta Corrente</option>
@@ -35,10 +36,10 @@
                                 <option value="Conta Universitária">Conta Universitária</option>
                             </select>
                         </p>
-                        <p>Saldo <input type="text"  class="saldo"></p>
+                        <p>Saldo <input type="text" class="saldo"></p>
                         
                         <!-- Campo adicional para o limite do cartão de crédito (apenas para Conta Corrente) -->
-                        <p>Limite do Cartão de Crédito <input type="text"  class="cartaoCredito"></p>
+                        <p>Limite do Cartão de Crédito <input type="text" class="cartaoCredito"></p>
 
                         <button type="submit">Adicionar Conta</button>
                     </form>
@@ -58,12 +59,34 @@
                 </div>
             </div>
         </section>
+        
+        <!-- Adicione o elemento canvas para o gráfico de pizza -->
+        <div class="graficos">
+            <div id="graficoPizzaContainer">
+                <canvas id="graficoPizza"></canvas>
+            </div>
+        </div>
 
         <footer>
             <p>&copy; 2023 Gerenciador de Contas Bancárias - Todos os direitos reservados</p>
         </footer>
         
+        <script>
+            // Desabilitar erros de source map no console
+            if (typeof Chart !== 'undefined') {
+                Chart.defaults.global.plugins.datalabels.display = false;
+            }
+        </script>
+
+        <!-- Adicione o script que cria os gráficos após as contas serem exibidas -->
         <script src="contaBancaria.js"></script>
-    </div>                    
+        <script>
+            // Chame as funções para criar os gráficos após a função exibirContas()
+            visualizarContas.addEventListener('click', function() {
+                criarGraficoPizza();
+                exibirContas();
+            });
+        </script>
+    </div>
 </body>
 </html>

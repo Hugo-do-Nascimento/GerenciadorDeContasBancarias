@@ -135,3 +135,48 @@ function deletarConta(numeroConta) {
 
 form.addEventListener('submit', adicionarConta);
 visualizarContas.addEventListener('click', exibirContas);
+
+// ... Seu código anterior ...
+
+// ... Seu código anterior ...
+
+// Função para criar um gráfico de pizza
+function criarGraficoPizza() {
+    const ctx = document.getElementById('graficoPizza').getContext('2d');
+
+    // Coletar dados para o gráfico de pizza (saldos por tipo de conta)
+    const dados = {
+        labels: [],
+        datasets: [{
+            data: [],
+            backgroundColor: [],
+        }],
+    };
+
+    for (const conta of contas) {
+        dados.labels.push(conta.tipo);
+        dados.datasets[0].data.push(conta.saldo);
+        // Defina cores de fundo diferentes para cada tipo de conta
+        const corFundo = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+        dados.datasets[0].backgroundColor.push(corFundo);
+    }
+
+    // Verifique se já existe um gráfico e destrua-o para evitar duplicatas
+    if (graficoPizza) {
+        graficoPizza.destroy();
+    }
+
+    // Crie o novo gráfico com os dados atualizados
+    graficoPizza = new Chart(ctx, {
+        type: 'pie',
+        data: dados,
+    });
+}
+
+let graficoPizza; // Variável para manter a referência do gráfico de pizza
+
+// Chame a função para criar o gráfico de pizza após a função exibirContas()
+visualizarContas.addEventListener('click', function () {
+    criarGraficoPizza();
+    exibirContas();
+});
