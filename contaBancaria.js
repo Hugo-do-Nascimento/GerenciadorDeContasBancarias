@@ -1,4 +1,3 @@
-// ... Seu código anterior ...
 
 class ContaBancaria {
     constructor(agencia, numero, tipo, saldo) {
@@ -72,9 +71,9 @@ class ContaUniversitaria extends ContaBancaria {
     sacar(valor) {
         if (valor > 0 && valor <= 500 && valor <= this._saldo) {
             this._saldo -= valor;
-            console.log(`Saque de R$${valor} realizado com sucesso. Novo Saldo: R$${this._saldo}`);
+            alert(`Saque de R$${valor} realizado com sucesso. Novo Saldo: R$${this._saldo}`);
         } else {
-            console.log('Valor de saque inválido ou saldo insuficiente');
+            alert('Valor de saque inválido ou saldo insuficiente');
         }
     }
 }
@@ -114,9 +113,13 @@ function adicionarConta(evento) {
     } else if (tipo === 'Conta Poupança') {
         novaConta = new ContaPoupanca(agencia, numero, saldo);
     } else if (tipo === 'Conta Universitária') {
+        if (deposito > 500) {
+            alert('Depósitos acima de 500 reais não são permitidos para Contas Universitárias')
+            return;
+        }
         novaConta = new ContaUniversitaria(agencia, numero, saldo);
     } else {
-        console.log('Tipo de conta inválido.');
+        alert('Tipo de conta inválido.');
         return;
     }
 
@@ -135,10 +138,6 @@ function deletarConta(numeroConta) {
 
 form.addEventListener('submit', adicionarConta);
 visualizarContas.addEventListener('click', exibirContas);
-
-// ... Seu código anterior ...
-
-// ... Seu código anterior ...
 
 // Função para criar um gráfico de pizza
 function criarGraficoPizza() {
